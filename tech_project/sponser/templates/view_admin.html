@@ -1,0 +1,154 @@
+{% extends 'layout.html' %}
+{% block content %}
+  
+<style>
+    .contact{
+        margin: auto;
+    }
+    .btn{
+        margin-left: 250px;
+    }
+    section{
+        background-image: url('../static/assets/images/banner1.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+</style>
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <h3 class="title-style text-center mb-5">View Event<span>Sponserships</span></h3>
+        <div class="row contact-block">
+            <div class="col-md-12 contact">
+                <div class="row">
+                    <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Event Date</th>
+
+                            <th scope="col">Sponser Name</th>
+                            <th scope="col">Sponser Email</th>
+                            <th scope="col">Sponser Contact</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Reciept</th>
+
+
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+
+                                <tr>
+                                    <td>{{ i.evnt_id.title }}</td>
+                                    <td>{{ i.evnt_id.sdate }}</td>
+                                   
+                                    <td>{{ i.user_id.username }}</td>
+                                    <td>{{ i.user_id.email }}</td>
+                                    <td>{{ i.user_id.contact }}</td>
+                                    <td>Paid {{ i.evnt_id.Fees }}Rs</td> 
+                                    <td><a href="{{i.card.url}}" target="_blank"><button class="btn-primary">click here</button></a></td>
+                                   
+                                </tr>
+                          
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                       
+                      
+                </div>
+
+            </div>
+        </div>
+        <h3 class="title-style text-center mb-5">View Decorations<span> Sponserships</span></h3>
+        <div class="row contact-block">
+            <div class="col-md-12 contact">
+                <div class="row">
+                    <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <th scope="col">year</th>
+
+                            <th scope="col">Sponser Name</th>
+
+                            <th scope="col">Firm Name</th>
+
+                            <th scope="col">Sponser Email</th>
+                            <th scope="col">Sponser Contact</th>
+                            <th scope="col">Sponsered Decoration</th>
+
+                            <th scope="col">Payment</th>
+                            <th scope="col">Reciept</th>
+
+
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data1 %}
+                                <tr>
+                                    <td>{{ i.decid.year }}</td>
+                                    <td>{{ i.user_id.username }}</td>
+                                    <td>{{ i.user_id.firm_name }}</td>
+                                    <td>{{ i.user_id.email }}</td>
+                                    <td>{{ i.user_id.contact }}</td>
+                                    <td>
+                                        <img src="{{i.decid.dec.url}}" alt="" width="80" height="80"><br>
+
+                                        {{ i.decid.title }}
+                                    </td>
+
+                                    <td>
+                                        
+                                        Paid {{ i.decid.amount }}Rs 
+
+                                    </td> 
+                                    <td><a href="{{i.card.url}}" target="_blank"><button class="btn-primary">click here</button></a></td>
+                                </tr>
+                          
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .custom-card {
+        background: linear-gradient(to right, rgba(255, 0, 0, 0.342), rgba(0, 0, 0, 0.451), rgba(255, 255, 255, 0.549));
+        color: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-card h4 {
+        margin-top: 0;
+        color: white;
+
+    }
+
+    .custom-card p {
+        margin: 5px 0;
+        color: white;
+
+    }
+    .big{
+        max-width:300px;
+        overflow-wrap: break-word;
+    }
+</style>
+{% endblock %}

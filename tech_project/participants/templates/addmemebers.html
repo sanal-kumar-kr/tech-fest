@@ -1,0 +1,59 @@
+
+    <!-- //header -->
+
+    <!-- inner banner -->
+   
+    <!-- //inner banner -->
+    {%extends 'layout.html'%}
+    {%block content%}
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        .contact{
+            margin: auto;
+        }
+        .btn{
+            margin-left: 250px;
+        }
+        section{
+            background-image: url('../static/assets/images/banner1.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
+    <!-- contact block -->
+    <section class="w3l-contact py-5" id="contact">
+        <div class="container py-md-5 py-4">
+            <h3 class="title-style text-center mb-5">Add Members</span></h3>
+            <div class="row contact-block">
+                <div class="col-md-7 contact">
+
+                    <form action="" method="post" class="signin-form">
+                        <div class="input-grids">
+                           
+                            <!-- <input type="text" name="w3lSubect" id="w3lSubect" placeholder="Subject"
+                            class="contact-input" required="" /> -->
+                            {% csrf_token %}
+                            
+                            {{form.as_p}}
+                        </div>
+                      
+                        <div class="text-start">
+                            <button class="btn btn-style btn-style-3">Submit</button>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+    <script>
+    
+</script>
+    <!-- map -->
+    {%endblock%}
+    <!-- //contact block -->
+
+    <!-- footer -->
+   

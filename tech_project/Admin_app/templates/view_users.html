@@ -1,0 +1,215 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<style>
+.card {
+    background-color: #0000006c; /* Black background */
+    color: #fff; /* White text */
+    border: 1px solid #ff0000; /* Red border */
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.5);
+}
+.card a {
+    color: #ff0000; /* Red text for links */
+    text-decoration: none;
+}
+.card a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+
+    
+    <style>
+        .contact{
+            margin: auto;
+        }
+        .btn{
+            margin-left: 250px;
+        }
+        section{
+            background-image: url('../static/assets/images/banner1.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .tl{
+        font-size: 25px;
+        color:white
+
+    }
+    </style>
+    <style>
+        .toast-center {
+               top: 10%;
+               left: 50%;
+               transform: translate(-50%, -50%);
+               position: fixed;
+           }   
+   </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       <!-- Include Toastr JS -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+       {% if messages %}
+       {% for message in messages %}
+       <script>
+           // Override Toastr options to use custom positioning class
+           toastr.options = {
+               "positionClass": "toast-center",
+               "closeButton": true,
+               "debug": false,
+               "newestOnTop": true,
+               "progressBar": true,
+               "preventDuplicates": false,
+               "onclick": null,
+               "showDuration": "100",
+               "hideDuration": "1000",
+               "timeOut": "2000",
+               "extendedTimeOut": "1000",
+               "showEasing": "swing",
+               "hideEasing": "linear",
+               "showMethod": "fadeIn",
+               "hideMethod": "fadeOut"
+           };
+   
+           // Use Toastr to display a success message
+           toastr.success('{{message}}', 'message');
+       </script>
+       {% endfor %}
+       {% endif %}
+    <!-- contact block -->
+    <section class="w3l-contact py-5" id="contact">
+      
+        <div class="container py-md-5 py-4">
+            <a href="/view_users/2" class="tl">Coordinator</a>->
+            <a href="/view_users/0" class="tl">Participants</a>->
+            <a href="/view_users/3" class="tl">sponsors</a>
+            {% if userdata %}
+            <h3 class="title-style text-center mb-5">View<span>
+
+                {% if ut == 0 %}
+                Participants
+                {% elif ut == 2 %}
+                Coordinators
+                {% elif  ut == 3 %}
+                 Sponsers
+                {% endif %}
+
+
+            </span></h3>
+            {% else %}
+            <h1 class="text-center mt-5">Switch Each Links To View User Details</h1>
+           {% endif %}
+
+            <div class="row contact-block">
+                <div class="col-md-12 contact">
+
+                    {% if ut == 0 %}
+                <div class="row">
+
+                    {% for i in userdata %}
+                  
+                    <div class="card col-md-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Name:</strong>{{i.username}}</p>
+                                <p><strong>Email</strong>{{i.email}}</p>
+                                <p><strong>Conatct</strong>{{i.contact}}</p>
+                                {% if i.status == 1 %}
+                                <a href="/disable_user/{{i.id}}" onclick="return confirm('Are You Sure To DIsable This User')"><button class=" btn-danger">Disable</button></a>
+                                {% elif i.status == 2  %}
+                                <a href="/enable_user/{{i.id}}" onclick="return confirm('Are You Sure To DIsable This User')"><button class=" btn-primary">Enable</button></a>
+
+                                {% endif %}
+
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Department:</strong>{{i.department}}</p>
+                                <p><strong>Cource:</strong>{{i.cource}}</p>
+                                <p><strong>Register Number:</strong>{{i.regno}}</p>
+                              <p><strong>Id proof:</strong>  <a href="{{i.idproof.url}}" target="_blank"><button class=" btn-primary">ID proof</button></a></p>  
+
+                            </div>
+
+                        </div>
+                        
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+                    {% elif ut == 2 %}
+                <div class="row">
+
+                    {% for i in userdata %}
+                    <div class="card col-md-5">
+                        <p><strong>Name:</strong>{{i.username}}</p>
+                        <p><strong>Email</strong>{{i.email}}</p>
+                        <p><strong>Conatct</strong>{{i.contact}}</p>
+                        <p><strong>Cource</strong>{{i.cource}}</p>
+
+                        <p><strong>Id proof:</strong>  <a href="{{i.idproof.url}}" target="_blank"><button class=" btn-primary">ID proof</button></a></p><br>  
+                        <a href="/disableuser/{{i.id}}" onclick="return confirm('Are You Sure To DIsable This User')"><button class=" btn-danger">Disable</button></a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                    {% elif ut == 3 %}
+                    <div class="row">
+
+                        {% for i in userdata %}
+                      
+                        <div class="card col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Name:</strong>{{i.username}}</p>
+                                    <p><strong>Email</strong>{{i.email}}</p>
+                                    <p><strong>Conatct</strong>{{i.contact}}</p>
+                                    <p><strong>City</strong>{{i.city}}</p>
+
+                                    <a href="/disableuser/{{i.id}}" onclick="return confirm('Are You Sure To DIsable This User')"><button class=" btn-danger">Disable</button></a>
+    
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Pin:</strong>{{i.pin}}</p>
+                                    <p><strong>Street:</strong>{{i.street}}</p>
+                                    <p><strong>Firm Name</strong>{{i.firm_name}}</p>
+                                    <p><strong>Firm Type</strong>{{i.firm_type}}</p>
+
+                                  <p><strong>Id proof:</strong>  <a href="{{i.idproof.url}}" target="_blank"><button class=" btn-primary">ID proof</button></a></p>  
+    
+                                </div>
+    
+                            </div>
+                            
+    
+                        </div>
+                        {% endfor %}
+                    </div>
+    
+                    {% endif %}
+                </div>
+               
+            </div>
+        </div>
+    </section>
+    {%endblock%}
+   
+   
+
+
+
+
+
+
+
+

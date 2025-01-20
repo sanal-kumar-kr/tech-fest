@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+{% block content %}
+  
+<style>
+    .contact{
+        margin: auto;
+    }
+    .btn{
+        margin-left: 250px;
+    }
+    section{
+        background-image: url('../static/assets/images/banner1.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+</style>
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <h3 class="title-style text-center mb-5">View<span> Registrations</span></h3>
+        <div class="row contact-block">
+            <div class="col-md-12 contact">
+                <div class="row">
+                    <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Event Date</th>
+
+                            <th scope="col">user Name</th>
+                            <th scope="col">User Email</th>
+                            <th scope="col">User Contact</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Id Card</th>
+                            <th scope="col">Action</th>
+
+
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+
+                                <tr>
+                                    <td>{{ i.evnt_id.title }}</td>
+                                    <td>{{ i.evnt_id.sdate }}</td>
+                                   
+                                    <td>{{ i.user_id.username }}</td>
+                                    <td>{{ i.user_id.email }}</td>
+                                    <td>{{ i.user_id.contact }}</td>
+                                    <td>Paid {{ i.evnt_id.Fees }}Rs</td> 
+                                    <td><a href="{{i.card.url}}" target="_blank"><button class="btn-primary">Id Card</button></a></td>
+                                    <td>
+                                        {% if request.session.ut == 0 %}
+                                        <a href="/cancelevent/{{i.id}}"  class="text-danger" onclick="return confirm('Are You Sure To cancel This Event')"><button class="btn-primary">Cancel</button></a>
+                                        {% endif %}
+                                        {% if i.evnt_id.event_type == "group"  %}
+                                        <a href="/view_members/{{ i.evnt_id.id }}" class="text-danger"><button class="btn-primary">View  group</button></a>
+                                         {%  endif %}
+    
+                                    </td>
+                                </tr>
+                          
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                       
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .custom-card {
+        background: linear-gradient(to right, rgba(255, 0, 0, 0.342), rgba(0, 0, 0, 0.451), rgba(255, 255, 255, 0.549));
+        color: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-card h4 {
+        margin-top: 0;
+        color: white;
+
+    }
+
+    .custom-card p {
+        margin: 5px 0;
+        color: white;
+
+    }
+    .big{
+        max-width:300px;
+        overflow-wrap: break-word;
+    }
+</style>
+{% endblock %}

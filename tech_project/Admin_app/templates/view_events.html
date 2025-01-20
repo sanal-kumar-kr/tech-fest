@@ -1,0 +1,247 @@
+{% extends 'layout.html' %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<style>
+    .contact {
+        margin: auto;
+    }
+    .btn {
+        margin-left: 250px;
+    }
+    section {
+        background-image: url('../static/assets/images/banner1.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+    .floating-btn {
+        position: fixed;
+        top: 30%;
+        left: 0;
+        transform: translateY(-70%);
+        z-index: 1000;
+    }
+</style>
+
+{% if messages %}
+{% for message in messages %}
+   <script>
+   alert('{{ message }}')
+   </script>
+{% endfor %}
+{% endif %}
+
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <h3 class="title-style text-center mb-5">View<span> Events</span></h3>
+        <div class="row contact-block">
+            <div class="col-md-12 contact">
+                <div class="row">
+                    {% for i in data %}
+                    <div class="custom-card col-md-5">
+                        <h4>{{ i.title }}</h4>
+                        {% if i.sponserid %}
+                        <p><strong>Sponsered By {{ i.sponserid.firm_name }}</strong></p>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Date:</strong> {{ i.sdate }}</p>
+                                <p><strong>Start Time:</strong> {{ i.stime }}</p>
+                                <p><strong>End Time:</strong> {{ i.etime }}</p>
+                                <p><strong>Fees:</strong> {{ i.Fees }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="big">
+                                    <strong>Description:</strong>
+                                    {% if i.description|length > 20 %}
+                                    {{ i.description|slice:":20" }}...<a href="#" class="view-more" data-description="{{ i.description }}">View More</a>
+                                    {% else %}
+                                    {{ i.description }}
+                                    {% endif %}
+                                </p>
+                                <p class="big">
+                                    <strong>Rules:</strong>
+                                    {% if i.rules|length > 20 %}
+                                    {{ i.rules|slice:":20" }}...<a href="#" class="view-more-rules" data-rules="{{ i.rules }}">View More</a>
+                                    {% else %}
+                                    {{ i.rules }}
+                                    {% endif %}
+                                </p>
+                                <p class="big"><strong>Event Type:</strong> {{ i.event_type }}</p>
+
+                                {% if request.session.ut == 3 or request.session.ut == 1 %}
+                                <p><strong>Total Cost:</strong> {{ i.TotalCost }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if request.session.ut == 1  %}
+                        {% if i.spostatus == 0 %}
+                        <a href="/editevent/{{ i.id }}" class="text-danger"><button class="btn-primary">Edit</button></a>
+                        <a href="/deleteevent/{{ i.id }}" class="text-danger" onclick="return confirm('Are You Sure To Delete This Event')"><button class="btn-danger">Delete</button></a>
+                        {% endif %}
+
+                        <a href="/viewregistrations/{{ i.id }}" class="text-danger"><button class="btn-primary">View Registrations</button></a>
+                        {% endif %}
+                        {% if request.session.ut == 2  %}
+                        <a href="/viewregistrations/{{ i.id }}" class="text-danger"><button class="btn-primary">View Registrations</button></a>
+
+                        {% endif %}
+
+                        
+                     
+
+                        {% if request.session.ut == 0 %}
+                        <a href="/Registerevent/{{ i.id }}" class="text-danger"><button class="btn-primary">Register</button></a>
+                        {% if i.event_type == "group" %}
+                        <a href="/view_members/{{ i.id }}" class="text-danger"><button class="btn-primary">View Group</button></a>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if request.session.ut == 3 %}
+                        <a href="/sponserevent/{{ i.id }}" class="text-danger" onclick="return confirm('Are You Sure To Sponsor This Event')"><button class="btn-primary">Sponsor</button></a>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Floating button for Update Price and Generate Certificate -->
+{% if request.session.userid == 1 %}
+
+<div class="floating-btn">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#actionModal">Actions</button>
+</div>
+{% endif %}
+
+<!-- Modal for Update Price and Generate Certificate -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="actionModalLabel">Select Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="selectEvent">Select Event</label>
+                    <select class="form-control" id="selectEvent">
+                        {% for i in data %}
+                        <option value="{{ i.id }}">{{ i.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="updatePrice" class="btn btn-primary">Update Price</a>
+                <a href="#" id="generateCertificate" class="btn btn-success">Generate Certificate</a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for full description and rules -->
+<div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Full Description</h5>
+            </div>
+            <div class="modal-body" id="fullDescription">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rulesModalLabel">Full Rules</h5>
+            </div>
+            <div class="modal-body" id="fullRules">
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-card {
+        background: linear-gradient(to right, rgba(255, 0, 0, 0.342), rgba(0, 0, 0, 0.451), rgba(255, 255, 255, 0.549));
+        color: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-card h4 {
+        margin-top: 0;
+        color: white;
+    }
+
+    .custom-card p {
+        margin: 5px 0;
+        color: white;
+    }
+
+    .big {
+        max-width: 300px;
+        overflow-wrap: break-word;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function()
+    {
+        // Function to handle the "View More" links for descriptions
+        var viewMoreLinks = document.querySelectorAll('.view-more');
+        viewMoreLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                var description = this.getAttribute('data-description');
+                var modalBody = document.getElementById('fullDescription');
+                modalBody.textContent = description;
+                $('#descriptionModal').modal('show');
+            });
+        });
+
+        // Function to handle the "View More" links for rules
+        var viewMoreRulesLinks = document.querySelectorAll('.view-more-rules');
+        viewMoreRulesLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                var rules = this.getAttribute('data-rules');
+                var modalBody = document.getElementById('fullRules');
+                modalBody.textContent = rules;
+                $('#rulesModal').modal('show');
+            });
+        });
+
+        // Function to update href attributes when the select option changes
+        document.getElementById('selectEvent').addEventListener('change', function() {
+            var selectedEventId = this.value;
+            document.getElementById('updatePrice').setAttribute('href', '/updateprice/' + selectedEventId);
+            document.getElementById('generateCertificate').setAttribute('href', '/generatecertificates/' + selectedEventId);
+        });
+
+        // Set the initial href attributes based on the default selected option
+        var initialEventId = document.getElementById('selectEvent').value;
+        document.getElementById('updatePrice').setAttribute('href', '/updateprice/' + initialEventId);
+        document.getElementById('generateCertificate').setAttribute('href', '/generatecertificates/' + initialEventId);
+    });
+</script>
+{% endblock %}

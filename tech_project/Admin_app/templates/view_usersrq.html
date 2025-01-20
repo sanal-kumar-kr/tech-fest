@@ -1,0 +1,143 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<style>
+.card {
+    background-color: #0000006c; /* Black background */
+    color: #fff; /* White text */
+    border: 1px solid #ff0000; /* Red border */
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.5);
+}
+.card a {
+    color: #ff0000; /* Red text for links */
+    text-decoration: none;
+}
+.card a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+
+    
+    <style>
+        .contact{
+            margin: auto;
+        }
+        .btn{
+            margin-left: 250px;
+        }
+        section{
+            background-image: url('../static/assets/images/banner1.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+      
+    </style>
+    <style>
+        .toast-center {
+               top: 10%;
+               left: 50%;
+               transform: translate(-50%, -50%);
+               position: fixed;
+           }   
+   </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       <!-- Include Toastr JS -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+       {% if messages %}
+       {% for message in messages %}
+       <script>
+           // Override Toastr options to use custom positioning class
+           toastr.options = {
+               "positionClass": "toast-center",
+               "closeButton": true,
+               "debug": false,
+               "newestOnTop": true,
+               "progressBar": true,
+               "preventDuplicates": false,
+               "onclick": null,
+               "showDuration": "100",
+               "hideDuration": "1000",
+               "timeOut": "2000",
+               "extendedTimeOut": "1000",
+               "showEasing": "swing",
+               "hideEasing": "linear",
+               "showMethod": "fadeIn",
+               "hideMethod": "fadeOut"
+           };
+   
+           // Use Toastr to display a success message
+           toastr.success('{{message}}', 'message');
+       </script>
+       {% endfor %}
+       {% endif %}
+    <!-- contact block -->
+    <section class="w3l-contact py-5" id="contact">
+      
+        <div class="container py-md-5 py-4">
+           
+            <h3 class="title-style text-center mb-5">View<span> Requests</span></h3>
+            <div class="row contact-block">
+                <div class="col-md-12 contact">
+
+                <div class="row">
+                    {% if userdata %}
+
+                    {% for i in userdata %}
+                  
+                    <div class="card col-md-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Name:</strong>{{i.username}}</p>
+                                <p><strong>Email:   </strong>{{i.email}}</p>
+                                <p><strong>Conatct:</strong>{{i.contact}}</p>
+                                <a href="/approve_user/{{i.id}}" onclick="return confirm('Are You Sure To Approve This User')"><button class="btn-primary" >Approve</button></a>
+                                <a href="/reject_user/{{i.id}}" onclick="return confirm('Are You Sure To Reject This User')"><button class="btn-danger" >Reject</button></a>
+
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Cource:</strong>{{i.cource}}</p>
+                              <p><strong>Id proof:</strong>  <a href="{{i.idproof.url}}" target="_blank">Id Proof</a></p>  
+
+                            </div>
+
+                        </div>
+                        
+
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h1 class="text-center text-danger">                     No User Requests
+                    </h1>
+                    {% endif %}
+                </div>
+
+               
+                    
+                </div>
+               
+            </div>
+        </div>
+    </section>
+    {%endblock%}
+   
+   
+
+
+
+
+
+
+
+

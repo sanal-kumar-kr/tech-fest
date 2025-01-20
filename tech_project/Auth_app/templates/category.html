@@ -1,0 +1,21 @@
+
+
+<li class="nav-item">
+    <a class="nav-link" href="/view_category">view Category</a>
+</li>
+
+<form action="" method="post">
+{% csrf_token %}
+{{form.as_p}}
+<input type="submit">
+
+</form>
+{% for i in data %}
+
+<div>
+    {{i.event_id.title}}
+{{i.title}}
+{{i.description}}
+
+</div>
+{% endfor %}

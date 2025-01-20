@@ -1,0 +1,12 @@
+APIinterface:
+
+   @GET(APIs.UPDATE_DVY)
+    Call<String> Delevery_Status(
+            @Query(Params.ID) String id,
+            @Query(Params.STATUS) String status
+    );
+
+
+APIconstants:
+
+        public static final String UPDATE_DVY =  "update_dvy.php";

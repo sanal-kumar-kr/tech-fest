@@ -1,0 +1,210 @@
+
+{% extends 'layout.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .toast-center {
+           top: 10%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           position: fixed;
+       }   
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <!-- Include Toastr JS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+   {% if messages %}
+   {% for message in messages %}
+   <script>
+       // Override Toastr options to use custom positioning class
+       toastr.options = {
+           "positionClass": "toast-center",
+           "closeButton": true,
+           "debug": false,
+           "newestOnTop": true,
+           "progressBar": true,
+           "preventDuplicates": false,
+           "onclick": null,
+           "showDuration": "100",
+           "hideDuration": "1000",
+           "timeOut": "2000",
+           "extendedTimeOut": "1000",
+           "showEasing": "swing",
+           "hideEasing": "linear",
+           "showMethod": "fadeIn",
+           "hideMethod": "fadeOut"
+       };
+
+       // Use Toastr to display a success message
+       toastr.success('{{message}}', 'message');
+   </script>
+   {% endfor %}
+   {% endif %}
+  
+<style>
+    .contact{
+        margin: auto;
+    }
+    .btn{
+        margin-left: 250px;
+        margin-top: 40px;
+    }
+    section{
+        background-image: url('../static/assets/images/banner1.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+    select{
+        width: 100%;
+    }
+    a{
+        font-size: 25px;
+        color:white
+
+    }
+    .wr{
+        display: inline;
+        margin: auto;
+        color:white
+    }
+    form{
+        color: black;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- contact block -->
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+     <div class="wr">   <a href="/add_user/0">Participants</a>-><a href="/add_user/2">Co-ordinators</a>-><a href="/add_user/3">Sponsers</a></div>
+
+              
+
+
+        <div class="row contact-block">
+            {% if ut == 0 %}
+            <h3 class="title-style text-center mb-5">Register<span> Participants</span></h3>
+
+            {% elif ut == 2 %}
+            <h3 class="title-style text-center mb-5">Register<span> Co-ordinators</span></h3>
+
+
+            {% elif ut == 3 %}  
+            <h3 class="title-style text-center mb-5">Register<span> Sponsers</span></h3>
+
+            {% endif %}
+            <div class="col-md-7 contact">
+                
+                <form action="" method="post" class="signin-form" enctype="multipart/form-data">
+                    <div class="input-grids">
+                       
+                        <!-- <input type="text" name="w3lSubect" id="w3lSubect" placeholder="Subject"
+                        class="contact-input" required="" /> -->
+                        {% csrf_token %}
+                        {{form.username.label}}
+
+                        {{form.username}}
+                        {{form.realname.label}}
+
+                        {{form.realname}}
+                        {{form.email.label}}
+
+                        {{form.email}}
+                        {{form.password.label}}
+
+                        {{form.password}}
+                        {{form.contact.label}}
+
+                        {{form.contact}}
+
+                        {% if ut == 3 %}
+                        {{form.firm_name.label}}
+
+                        {{form.firm_name}}
+
+
+
+                        {{form.firm_type.label}}
+
+                        {{form.firm_type}}
+
+
+
+
+
+                        {{form.street.label}}
+
+                        {{form.street}}
+                        {{form.city.label}}
+
+                        {{form.city}}
+                        {{form.pin.label}}
+
+                        {{form.pin}}
+
+                        {% endif %}
+                        {% if ut == 2 %}
+                        {{form.cource.label}}
+                        {{form.cource}}
+                        {% endif %}
+                        {% if ut == 0 %}
+                        {{form.department.label}}
+                        {{form.department}}
+                        {{form.cource.label}}
+                        {{form.cource}}
+<label for="" style="margin-top: 5px;">Admission Number</label>
+                        {{form.admissionnum}}
+
+                        {% endif %}
+                        <label for="">{{form.idproof.label_tag}}</label>
+                        {{form.idproof}}
+                    </div>
+                   {% if form %}
+                    <div class="text-start">
+                        <button type="submit" class="btn btn-style btn-style-3">Submit</button>
+                    </div>
+                    {% else %}
+                    <h1 class="text-center">We hope you find what you're looking for and that you enjoy your stay</h1>
+                    <h1 class="text-center">Register Here</h1>
+                    {% endif %}
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function(){
+  $("button[type=submit]").click(function(){
+    if($("#id_username").val()== ''){
+
+        alert("Enter Username")
+        return false
+    }
+
+    if($("#id_password").val() == '' || $("#id_password").val().length < 3){
+
+    alert("Enter Valid Password With atleast 3 digits")
+    return false
+    }
+    if($("#id_contact").val() == '' || $("#id_contact").val().length !=10){
+
+    alert("Enter Valid Phone Number With 10 Numbers")
+    return false
+    }
+    if($("#id_email").val() == '' || !$("#id_email").val().test(regex)){
+
+    alert("Enter Valid Email")
+    return false
+    }
+  
+
+  });
+});
+</script>
+<!-- map -->
+{% endblock %}
+

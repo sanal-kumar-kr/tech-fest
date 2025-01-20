@@ -1,0 +1,103 @@
+
+    <!-- //header -->
+
+    <!-- inner banner -->
+   
+    <!-- //inner banner -->
+
+    {%extends 'layout.html'%}
+    {%block content%}
+    {% load static %}
+    
+    <style>
+        .contact{
+            margin: auto;
+        }
+        .btn{
+            margin-left: 250px;
+        }
+        section{
+            background-image: url('../static/assets/images/banner1.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- contact block -->
+    <section class="w3l-contact py-5" id="contact">
+        <div class="container py-md-5 py-4">
+            <h3 class="title-style text-center mb-5">Update price</span></h3>
+            <div class="row contact-block">
+                <div class="col-md-7 contact">
+
+                    <form action="" method="post" class="signin-form">
+                        <div class="input-grids">
+                            <!-- <input type="text" name="w3lSubect" id="w3lSubect" placeholder="Subject"
+                            class="contact-input" required="" /> -->
+                            {% csrf_token %}
+                            <select name="first" id="" style="width: 100%;margin-top: 20px;">
+                                <option value="">First</option>
+                                {% for i in  data%}
+                                <option value="{{i.user_id.id}}">{{i.user_id.username}}</option>
+
+                                {% endfor %}
+
+                            </select>
+                            <select name="second" id="" style="width: 100%;margin-top: 20px;">
+                                <option value="">Second</option>
+                                {% for i in  data%}
+                                <option value="{{i.user_id.id}}">{{i.user_id.username}}</option>
+
+                                {% endfor %}
+                            </select>  
+                            <select name="third" id="" style="width: 100%;margin-top: 20px;">
+                                <option value="">Third</option>
+                                {% for i in  data%}
+                                <option value="{{i.user_id.id}}">{{i.user_id.username}}</option>
+
+                                {% endfor %}
+                            </select>
+                        
+                        </div>
+                      
+                        <div class="text-start mt-5">
+                            <button type="submit" class="btn btn-style btn-style-3">Submit</button>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+    <script>
+        
+        $(document).ready(function(){
+                    $("button[type='submit']").on("click", function(){
+                             
+                        if(  $("select[name='first']").val() == $("select[name='second']").val() ||  $("select[name='first']").val() == $("select[name='third']").val() ){
+                            alert("Select Uniqe People");
+                            return false;
+                        }
+
+
+                        if($("select[name='first']").val() == ''){
+                            alert("Select first Price");
+                            return false;
+                        }
+
+                        if($("select[name='second']").val() ==  ''){
+                            alert("Select Second Price");
+                            return false;
+                        } if($("select[name='third']").val() ==  ''){
+                            alert("Select Third Price");
+                            return false;
+                        }
+                    });
+                });
+    </script>
+    <!-- map -->
+    {%endblock%}
+    <!-- //contact block -->
+
+    <!-- footer -->
+   

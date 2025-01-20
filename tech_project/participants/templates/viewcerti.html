@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block content %}
+  
+<style>
+    .contact{
+        margin: auto;
+    }
+    .btn{
+        margin-left: 250px;
+    }
+    section{
+        background-image: url('../static/assets/images/banner1.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+</style>
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <h3 class="title-style text-center mb-5">View<span>Certificates</span></h3>
+        <div class="row contact-block">
+            <div class="col-md-12 contact">
+                <div class="row">
+
+                        {% for i in data %}
+                        <div class="custom-card col-md-5">
+                            <h4>{{ i.evnt_id.title }}</h4>
+                            <div class="row">
+                                  <div class="col-md-6">
+                                    <p> <strong>Start Date:</strong>{{ i.evnt_id.sdate }}</p>
+                                    <p> <strong>Certificate:</strong><a href="{{i.card.url}}" target="_blank" download="{{ i.evnt_id.title }} Certificate.pdf">Certificate</a></p>
+
+                                  </div>
+                                  <div class="col-md-6">
+                                    
+
+
+
+
+                                  </div>
+                            </div>
+                         
+                          
+                            
+                        </div>
+                        {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .custom-card {
+        background: linear-gradient(to right, rgba(255, 0, 0, 0.342), rgba(0, 0, 0, 0.451), rgba(255, 255, 255, 0.549));
+        color: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-card h4 {
+        margin-top: 0;
+        color: white;
+
+    }
+
+    .custom-card p {
+        margin: 5px 0;
+        color: white;
+
+    }
+    .big{
+        max-width:300px;
+        overflow-wrap: break-word;
+    }
+</style>
+{% endblock %}

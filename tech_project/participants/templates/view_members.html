@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block content %}
+  
+<style>
+    .contact{
+        margin: auto;
+    }
+    .btn{
+        margin-left: 250px;
+    }
+    section{
+        background-image: url('../static/assets/images/banner1.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+</style>
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <h3 class="title-style text-center mb-5">View<span>Members</span></h3>
+        <div class="row contact-block">
+            <div class="col-md-12 contact">
+
+                        {% for i in data %}
+                        <div class="custom-card col-md-6 mx-auto">
+                            <h5><b>Member 1</b> :{{i.user_id.username}}</h5>
+                            <p> <b>   Member 2</b> :{{i.member2}}</p>
+                            <p> <b>  Member 3</b>        :{{i.member3}}</p>
+                            <p>      <b> Member 4</b>   :{{i.member4}}</p>
+
+                        </div>
+                        {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .custom-card {
+        background: linear-gradient(to right, rgba(255, 0, 0, 0.342), rgba(0, 0, 0, 0.451), rgba(255, 255, 255, 0.549));
+        color: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-card h4 {
+        margin-top: 0;
+        color: white;
+
+    }
+
+    .custom-card p {
+        margin: 5px 0;
+        color: white;
+
+    }
+    .big{
+        max-width:300px;
+        overflow-wrap: break-word;
+    }
+</style>
+{% endblock %}
